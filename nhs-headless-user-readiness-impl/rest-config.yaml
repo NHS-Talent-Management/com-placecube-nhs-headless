@@ -1,0 +1,7 @@
+apiDir: "../nhs-headless-user-readiness-api/src/main/java"
+apiPackagePath: "com.placecube.nhs.headless.user.readiness"
+application:
+    baseURI: "/nhs-headless-user-readiness"
+    className: "HeadlessUserReadinessApplication"
+    name: "NHS.Headless.User.Readiness"
+author: "Placecube"

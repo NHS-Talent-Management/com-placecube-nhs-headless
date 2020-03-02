@@ -1,0 +1,8 @@
+def modules = [
+	'nhs-headless-user-readiness-api',
+	'nhs-headless-user-readiness-impl'
+] as String[]
+
+include modules
+
+gradle.ext.groupId = 'com.placecube.nhs.headless'
