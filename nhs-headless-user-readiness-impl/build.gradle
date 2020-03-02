@@ -25,3 +25,27 @@ dependencies {
 	testCompile group:'org.powermock', name:'powermock-api-mockito', version:'1.6.5'
 	testCompile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.1.1'
 }
+
+
+sonarqube {
+   properties {
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/graphql/mutation/v1_0_0/*.java,'
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/graphql/query/v1_0_0/*.java,'
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/graphql/servlet/v1_0_0/*.java,'
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/jaxrs/application/*.java,'
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/resource/v1_0_0/BaseQuestionResourceImpl.java,'
+	    properties['sonar.exclusions'] = 'com/placecube/nhs/headless/user/readiness/internal/resource/v1_0_0/OpenAPIResourceImpl.java,'
+	}
+}
+
+javadoc {
+    excludes.addAll([
+		'com/placecube/nhs/headless/user/readiness/internal/graphql/mutation/v1_0_0/*.java',
+	    'com/placecube/nhs/headless/user/readiness/internal/graphql/query/v1_0_0/*.java',
+	    'com/placecube/nhs/headless/user/readiness/internal/graphql/servlet/v1_0_0/*.java',
+	    'com/placecube/nhs/headless/user/readiness/internal/jaxrs/application/*.java',
+	    'com/placecube/nhs/headless/user/readiness/internal/resource/v1_0_0/BaseQuestionResourceImpl.java',
+	    'com/placecube/nhs/headless/user/readiness/internal/resource/v1_0_0/OpenAPIResourceImpl.java'
+
+    ])
+}
