@@ -84,7 +84,7 @@ public abstract class BaseQuestionResourceImpl implements QuestionResource {
 	}
 
 	@Override
-	@Consumes({"application/json", "application/xml"})
+	@Consumes("text/plain")
 	@Operation(description = "Updates the answer to a single question")
 	@PUT
 	@Parameters(

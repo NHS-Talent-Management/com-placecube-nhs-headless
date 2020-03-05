@@ -42,6 +42,7 @@ public class Mutation {
 	}
 
 	@GraphQLInvokeDetached
+	@GraphQLName("putUserProfileQuestionQuestionIdString")
 	public void putUserProfileQuestion(
 			@GraphQLName("questionId") Long questionId,
 			@GraphQLName("string") String string)
