@@ -1,6 +1,7 @@
 package com.placecube.nhs.headless.user.readiness.internal.resource.v1_0_0;
 
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -50,6 +51,16 @@ public abstract class BaseQuestionResourceImpl implements QuestionResource {
 	@Tags(value = {@Tag(name = "Question")})
 	public Page<Question> getUserProfileQuestionnairePage() throws Exception {
 		return Page.of(Collections.emptyList());
+	}
+
+	@Override
+	@GET
+	@Operation(description = "Returns the intro content for the questionnaire")
+	@Path("/user-profile/questionnaire-intro")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "Question")})
+	public String getUserProfileQuestionnaireIntro() throws Exception {
+		return StringPool.BLANK;
 	}
 
 	@Override

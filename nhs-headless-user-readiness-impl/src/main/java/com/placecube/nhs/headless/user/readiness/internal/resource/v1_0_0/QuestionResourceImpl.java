@@ -9,8 +9,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.placecube.nhs.headless.user.readiness.dto.v1_0_0.Question;
 import com.placecube.nhs.headless.user.readiness.resource.v1_0_0.QuestionResource;
@@ -22,6 +28,12 @@ import com.placecube.nhs.readiness.service.ReadinessService;
  */
 @Component(properties = "OSGI-INF/liferay/rest/v1_0_0/question.properties", scope = ServiceScope.PROTOTYPE, service = QuestionResource.class)
 public class QuestionResourceImpl extends BaseQuestionResourceImpl {
+
+	@Reference
+	private CompanyLocalService companyLocalService;
+
+	@Reference
+	private JournalArticleLocalService journalArticleLocalService;
 
 	@Reference
 	private ReadinessService readinessService;
@@ -37,6 +49,15 @@ public class QuestionResourceImpl extends BaseQuestionResourceImpl {
 		PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
 		ReadinessQuestion readinessQuestion = readinessService.getQuestion(questionId, permissionChecker.getUser());
 		return getQuestionFromReadinessQuestion(readinessQuestion);
+	}
+
+	@Override
+	public String getUserProfileQuestionnaireIntro() throws Exception {
+		PermissionChecker permissionChecker = PermissionThreadLocal.getPermissionChecker();
+		User user = permissionChecker.getUser();
+		Company company = companyLocalService.getCompany(user.getCompanyId());
+		JournalArticle journalArticle = readinessService.getQuestionnaireIntro(company);
+		return journalArticleLocalService.getArticleContent(journalArticle, journalArticle.getDDMTemplateKey(), StringPool.BLANK, user.getLanguageId(), null, null);
 	}
 
 	@Override

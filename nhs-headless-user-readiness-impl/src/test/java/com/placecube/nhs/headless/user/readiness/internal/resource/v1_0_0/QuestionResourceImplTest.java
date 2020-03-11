@@ -18,10 +18,15 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.placecube.nhs.headless.user.readiness.dto.v1_0_0.Question;
 import com.placecube.nhs.readiness.model.ReadinessQuestion;
@@ -47,9 +52,16 @@ public class QuestionResourceImplTest extends PowerMockito {
 	private static final String NAME_3 = "nameQuestion3";
 	private static final String[] OPTIONS_3 = new String[] { "opt3", "opt3A" };
 	private static final String SELECTED_ANSWER_3 = "value3";
+	private static final Long COMPANY_ID = 45454545l;
 
 	@InjectMocks
 	private QuestionResourceImpl questionResourceImpl;
+
+	@Mock
+	private CompanyLocalService mockCompanyLocalService;
+
+	@Mock
+	private JournalArticleLocalService mockJournalArticleLocalService;
 
 	@Mock
 	private ReadinessService mockReadinessService;
@@ -68,6 +80,12 @@ public class QuestionResourceImplTest extends PowerMockito {
 
 	@Mock
 	private ReadinessQuestion mockReadinessQuestion3;
+
+	@Mock
+	private Company mockCompany;
+
+	@Mock
+	private JournalArticle mockJournalArticle;
 
 	@Before
 	public void setUp() {
@@ -112,6 +130,46 @@ public class QuestionResourceImplTest extends PowerMockito {
 		when(mockReadinessService.getQuestion(QUESTION_ID_1, mockUser)).thenThrow(new PortalException());
 
 		questionResourceImpl.getUserProfileQuestion(QUESTION_ID_1);
+	}
+
+	@Test
+	public void getUserProfileQuestionnaireIntro_WhenNoError_ThenReturnsTheQuestionnaireIntroTextForTheUser() throws Exception {
+		String expected = "expectedString";
+		String languageId = "languageIdValue";
+		String ddmTemplateKey = "ddmTemplateKeyValue";
+		when(PermissionThreadLocal.getPermissionChecker()).thenReturn(mockPermissionChecker);
+		when(mockPermissionChecker.getUser()).thenReturn(mockUser);
+		when(mockUser.getLanguageId()).thenReturn(languageId);
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockCompanyLocalService.getCompany(COMPANY_ID)).thenReturn(mockCompany);
+		when(mockReadinessService.getQuestionnaireIntro(mockCompany)).thenReturn(mockJournalArticle);
+		when(mockJournalArticle.getDDMTemplateKey()).thenReturn(ddmTemplateKey);
+		when(mockJournalArticleLocalService.getArticleContent(mockJournalArticle, ddmTemplateKey, StringPool.BLANK, languageId, null, null)).thenReturn(expected);
+
+		String result = questionResourceImpl.getUserProfileQuestionnaireIntro();
+
+		assertThat(result, equalTo(expected));
+	}
+
+	@Test(expected = Exception.class)
+	public void getUserProfileQuestionnaireIntro_WhenExceptionRetrievingCompany_ThenThrowsException() throws Exception {
+		when(PermissionThreadLocal.getPermissionChecker()).thenReturn(mockPermissionChecker);
+		when(mockPermissionChecker.getUser()).thenReturn(mockUser);
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockCompanyLocalService.getCompany(COMPANY_ID)).thenThrow(new PortalException());
+
+		questionResourceImpl.getUserProfileQuestionnaireIntro();
+	}
+
+	@Test(expected = Exception.class)
+	public void getUserProfileQuestionnaireIntro_WhenExceptionRetrievingArticle_ThenThrowsException() throws Exception {
+		when(PermissionThreadLocal.getPermissionChecker()).thenReturn(mockPermissionChecker);
+		when(mockPermissionChecker.getUser()).thenReturn(mockUser);
+		when(mockUser.getCompanyId()).thenReturn(COMPANY_ID);
+		when(mockCompanyLocalService.getCompany(COMPANY_ID)).thenReturn(mockCompany);
+		when(mockReadinessService.getQuestionnaireIntro(mockCompany)).thenThrow(new PortalException());
+
+		questionResourceImpl.getUserProfileQuestionnaireIntro();
 	}
 
 	@Test

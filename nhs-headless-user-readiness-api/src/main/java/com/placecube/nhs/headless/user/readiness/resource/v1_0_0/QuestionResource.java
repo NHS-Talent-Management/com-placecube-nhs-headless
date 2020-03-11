@@ -20,6 +20,8 @@ public interface QuestionResource {
 
 	public Page<Question> getUserProfileQuestionnairePage() throws Exception;
 
+	public String getUserProfileQuestionnaireIntro() throws Exception;
+
 	public void deleteUserProfileQuestion(Long questionId) throws Exception;
 
 	public Question getUserProfileQuestion(Long questionId) throws Exception;

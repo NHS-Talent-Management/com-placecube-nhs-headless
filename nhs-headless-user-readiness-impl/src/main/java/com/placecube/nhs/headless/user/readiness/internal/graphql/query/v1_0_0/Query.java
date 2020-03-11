@@ -52,6 +52,16 @@ public class Query {
 
 	@GraphQLField
 	@GraphQLInvokeDetached
+	public String getUserProfileQuestionnaireIntro() throws Exception {
+		return _applyComponentServiceObjects(
+			_questionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			questionResource ->
+				questionResource.getUserProfileQuestionnaireIntro());
+	}
+
+	@GraphQLField
+	@GraphQLInvokeDetached
 	public Question getUserProfileQuestion(
 			@GraphQLName("questionId") Long questionId)
 		throws Exception {
