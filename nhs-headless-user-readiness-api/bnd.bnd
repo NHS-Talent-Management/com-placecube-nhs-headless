@@ -1,6 +1,6 @@
 Bundle-SymbolicName: nhs-headless-user-readiness-api
 Bundle-Name: Placecube NHS Headless - User Readiness API
-Bundle-Version: 1.1.0
+Bundle-Version: 1.1.1.SNAPSHOT
 
 Export-Package: \
 	com.placecube.nhs.headless.user.readiness.dto.v1_0_0,\
