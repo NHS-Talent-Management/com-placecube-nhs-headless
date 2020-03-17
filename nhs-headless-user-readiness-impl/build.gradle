@@ -1,7 +1,7 @@
 dependencies {
 	compile project (':nhs-headless-user-readiness-api')
 	
-	compile group: 'com.placecube.nhs', name: 'com.placecube.nhs.readiness.api', version: '1.2.0'
+	compile group: 'com.placecube.nhs', name: 'com.placecube.nhs.readiness.api', version: '2.0.0'
 	
 	compileOnly group: 'com.liferay', name: 'com.liferay.portal.vulcan.api'
 	compileOnly group: 'com.liferay', name: 'com.liferay.petra.function'
