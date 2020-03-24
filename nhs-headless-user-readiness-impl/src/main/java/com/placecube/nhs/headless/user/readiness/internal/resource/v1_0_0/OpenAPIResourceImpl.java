@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "NHS Talent User Readiness", title = "NHS Talent", version = "1.0.0")
+	info = @Info(description = "An API to retrieve and update the readiness for a user", title = "NHS Talent - User Readiness", version = "1.0.0")
 )
 @Path("/1.0.0")
 public class OpenAPIResourceImpl {

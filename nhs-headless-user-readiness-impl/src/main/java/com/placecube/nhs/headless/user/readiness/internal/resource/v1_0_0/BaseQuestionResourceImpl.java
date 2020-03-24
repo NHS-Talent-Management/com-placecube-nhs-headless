@@ -55,7 +55,9 @@ public abstract class BaseQuestionResourceImpl implements QuestionResource {
 
 	@Override
 	@GET
-	@Operation(description = "Returns the intro content for the questionnaire")
+	@Operation(
+		description = "Returns the help information displayed in the first page of the questionnaire"
+	)
 	@Path("/user-profile/questionnaire-intro")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "Question")})
