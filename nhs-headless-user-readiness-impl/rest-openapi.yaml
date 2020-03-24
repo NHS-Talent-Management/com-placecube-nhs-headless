@@ -68,10 +68,7 @@ paths:
             responses:
                 200:
                     content:
-                        application/json:
-                            schema:
-                                type: "string"
-                        application/xml:
+                        text/html:
                             schema:
                                 type: "string"
                     description: OK
@@ -124,6 +121,8 @@ paths:
                     description: OK
                 403:
                   description: Forbidden
+                500:
+                  description: Invalid
             tags: ["Question"]
         delete:
             description: Deletes the answer for a single question

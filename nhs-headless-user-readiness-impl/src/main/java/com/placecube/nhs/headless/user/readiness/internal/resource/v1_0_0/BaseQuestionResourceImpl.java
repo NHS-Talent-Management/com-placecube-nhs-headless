@@ -59,7 +59,7 @@ public abstract class BaseQuestionResourceImpl implements QuestionResource {
 		description = "Returns the help information displayed in the first page of the questionnaire"
 	)
 	@Path("/user-profile/questionnaire-intro")
-	@Produces({"application/json", "application/xml"})
+	@Produces("text/html")
 	@Tags(value = {@Tag(name = "Question")})
 	public String getUserProfileQuestionnaireIntro() throws Exception {
 		return StringPool.BLANK;
